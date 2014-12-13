@@ -1,0 +1,25 @@
+{
+  "name": "word2vec",
+  "version": "0.4.0",
+  "description": " Wrapper of the Google word2vec tool",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "mocha test",
+    "prepublish": "make --directory=src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Planeshifter/node-word2vec.git"
+  },
+  "keywords": [
+    "text-analytics",
+    "deep-learning",
+    "word-distance"
+  ],
+  "author": "Philipp Burckhardt",
+  "license": "APA-2",
+  "bugs": {
+    "url": "https://github.com/Planeshifter/node-word2vec/issues"
+  },
+  "homepage": "https://github.com/Planeshifter/node-word2vec"
+}
