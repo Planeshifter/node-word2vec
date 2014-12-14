@@ -6,10 +6,12 @@ node-word2vec
 
 # Installation
 
+Install via npm:
 ```
 npm install word2vec
 ```
 
+To use it inside node.js, require the module as follows:
 ```
 w2v = require('word2vec');
 ```
@@ -19,7 +21,6 @@ w2v = require('word2vec');
 ## API
 
 ### .word2phrases(input, output, params)
-
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. If they are not supplied, the default values are used.
 
@@ -49,5 +50,18 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | readVocab | the vocabulary will be read from *readVocab* value , not constructed from the training data | |
 | cbow | use the continuous bag of words model | 1 (use 0 for skip-gram model) |
 
-
 ###.loadModel(file, callback)
+
+## Model Object
+
+### Properties
+
+#### .vocab
+
+#### .size
+
+### Methods
+
+#### .distance()
+
+#### .analogy()
