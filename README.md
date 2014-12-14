@@ -70,6 +70,9 @@ Length of the learned word vectors.
 
 ### Methods
 
-#### .distance()
+#### .distance(words, [number])
 
-#### .analogy()
+Example:
+```
+
+#### .analogy(word, pair, [number])
