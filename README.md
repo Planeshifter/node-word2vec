@@ -25,6 +25,9 @@ w2v = require('word2vec');
 ## API
 
 ### .word2phrases(input, output, params)
+For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York". 
+
+Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`. 
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. If they are not supplied, the default values are used.
 
@@ -36,6 +39,9 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | debug         | sets debug mode      | 2 |
 
 ### .word2vec(input, output, params)
+This function calls Google's *word2vec* command line application and finds vector representations for the words in the `input` training corpus, writing the results to the `output` file. The output can then be loaded into node via the `loadModel` function, which exposes several methods to interact with the learned vector representations of the words. 
+
+The `params` parameter expects a JS object optionally containing some of the following keys and associated values. For those missing, the default values are used:
 
 | Key        |   Description           | Default Value |
 | ------------- |:-------------:| -----:|
@@ -67,14 +73,18 @@ w2v.loadModel("../src/vectors.txt", function(err, model){
 Sample Output:
 
 ```
-
+{ getVectors: [Function],
+  distance: [Function: distance],
+  analogy: [Function: analogy],
+  words: '98331',
+  size: '200' }
 ```
 
 ## Model Object
 
 ### Properties
 
-#### .vocab
+#### .words
 
 Number of unique words in the training corpus.
 
@@ -83,6 +93,51 @@ Number of unique words in the training corpus.
 Length of the learned word vectors. 
 
 ### Methods
+
+#### .getVectors([words])
+
+Returns the learned vector representations for the supplied words. If *words* is undefined, i.e. the function is evoked without passing it any arguments, it returns the vectors for all learned words.
+
+Example:
+```
+model.getVectors(["king","queen","boy","girl"]);
+```
+
+Sample Output:
+```
+[ { word: 'king',
+    values: 
+     [ 0.006371254151248689,
+       -0.04533821363410406,
+       0.1589142808632736,
+      ...
+       0.042080221123209825,
+       -0.038347102017109225 ] },
+  { word: 'queen',
+    values: 
+     [ 0.014399041122817985,
+       -0.000026896638109750347,
+       0.20398248693190596,
+      ...
+       -0.05329081648586445,
+       -0.012556868376422963 ] },
+  { word: 'girl',
+    values: 
+     [ -0.1247347144692245,
+       0.03834108759049417,
+       -0.022911846734360187,
+        ...
+       -0.0798994867922872,
+       -0.11387393949666696 ] },
+  { word: 'boy',
+    values: 
+     [ -0.05436531234037158,
+       0.008874993957578164,
+       -0.06711992414442335,
+        ...
+       0.05673998568026764,
+       -0.04885347925837509 ] } ]
+```
 
 #### .distance(phrase, [number])
 Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned. 
