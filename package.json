@@ -26,6 +26,7 @@
     "change-case": "^2.1.5",
     "charm": "^1.0.0",
     "mime": "^1.2.11",
+    "mocha": "^2.0.1",
     "underscore": "^1.7.0"
   }
 }
