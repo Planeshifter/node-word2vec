@@ -3,9 +3,9 @@ var main = require("../lib/main.js");
 var chai = require("chai");
 var expect = chai.expect;
 
-describe("distance", function(){
+describe("loadModel", function(){
   it("is a callable function", function(){
-    expect(main.distance).to.be.a("function");
+    expect(main.loadModel).to.be.a("function");
   });
 });
 
