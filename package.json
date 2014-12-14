@@ -4,8 +4,7 @@
   "description": " Wrapper of the Google word2vec tool",
   "main": "lib/main.js",
   "scripts": {
-    "test": "mocha test",
-    "prepublish": "make --directory=src"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
