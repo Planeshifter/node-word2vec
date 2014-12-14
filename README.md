@@ -56,6 +56,8 @@ The `params` parameter expects a JS object optionally containing some of the fol
 
 ###.loadModel(file, callback)
 
+This is the main function of the package, which loads a saved model file containing vector representations of words into memory. Such a file can be created by using the *word2vec* function. After the file is successfully loaded, the supplied callback function is fired, which following conventions has two parameters: `err` and `model`. If everything runs smoothly and no error occured, the first argument should be `null`. The `model` parameter is a model object holding all data and exposing the following properties and methods:
+
 ## Model Object
 
 ### Properties
