@@ -56,7 +56,19 @@ The `params` parameter expects a JS object optionally containing some of the fol
 
 ###.loadModel(file, callback)
 
-This is the main function of the package, which loads a saved model file containing vector representations of words into memory. Such a file can be created by using the *word2vec* function. After the file is successfully loaded, the supplied callback function is fired, which following conventions has two parameters: `err` and `model`. If everything runs smoothly and no error occured, the first argument should be `null`. The `model` parameter is a model object holding all data and exposing the following properties and methods:
+This is the main function of the package, which loads a saved model file containing vector representations of words into memory. Such a file can be created by using the *word2vec* function. After the file is successfully loaded, the supplied callback function is fired, which following conventions has two parameters: `err` and `model`. If everything runs smoothly and no error occured, the first argument should be `null`. The `model` parameter is a model object holding all data and exposing the properties and methods explained in the *Model Object* section.
+
+Example:
+```
+w2v.loadModel("../src/vectors.txt", function(err, model){
+  console.log(model)
+});
+```
+Sample Output:
+
+```
+
+```
 
 ## Model Object
 
@@ -81,7 +93,31 @@ model.distance(["switzerland"], 20);
 ```
 Sample Output:
 
+```
+[ { word: 'chur', dist: 0.6070252929307018 },
+  { word: 'ticino', dist: 0.6049085549621765 },
+  { word: 'bern', dist: 0.6001648890419077 },
+  { word: 'cantons', dist: 0.5822226582323267 },
+  { word: 'z_rich', dist: 0.5671853621346818 },
+  { word: 'iceland_norway', dist: 0.5651901750812693 },
+  { word: 'aargau', dist: 0.5590524831511438 },
+  { word: 'aarau', dist: 0.555220055372284 },
+  { word: 'zurich', dist: 0.5401119092258485 },
+  { word: 'berne', dist: 0.5391358099043649 },
+  { word: 'zug', dist: 0.5375590160292268 },
+  { word: 'swiss_confederation', dist: 0.5365824598661265 },
+  { word: 'germany', dist: 0.5337325187293028 },
+  { word: 'italy', dist: 0.5309218588704736 },
+  { word: 'alsace_lorraine', dist: 0.5270204106304165 },
+  { word: 'belgium_denmark', dist: 0.5247942780963807 },
+  { word: 'sweden_finland', dist: 0.5241634037188426 },
+  { word: 'canton', dist: 0.5212495170066538 },
+  { word: 'anterselva', dist: 0.5186651140386938 },
+  { word: 'belgium', dist: 0.5150383129735169 } ]
+```
+
 #### .analogy(word, pair, [number])
+For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned. 
 
 Example:
 ```
@@ -89,3 +125,16 @@ model.analogy("woman",["man","king"], 10);
 ```
 
 Sample Output:
+
+```
+[ { word: 'queen', dist: 0.5607083309028658 },
+  { word: 'queen_consort', dist: 0.510974781496456 },
+  { word: 'crowned_king', dist: 0.5060923120115347 },
+  { word: 'isabella', dist: 0.49319425034513376 },
+  { word: 'matilda', dist: 0.4931204901924969 },
+  { word: 'dagmar', dist: 0.4910608716969606 },
+  { word: 'sibylla', dist: 0.4832698899279795 },
+  { word: 'died_childless', dist: 0.47957251302898396 },
+  { word: 'charles_viii', dist: 0.4775804990655765 },
+  { word: 'melisende', dist: 0.47663194967001704 } ]
+```
