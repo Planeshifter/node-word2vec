@@ -4,6 +4,10 @@
 node-word2vec
 =============
 
+# What is it?
+
+This is a node.js interface to the *word2vec* tool developed at Google Research for "efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words", which can be used in a variety of NLP tasks. For further information about the *word2vec* project, consult [https://code.google.com/p/word2vec/](https://code.google.com/p/word2vec/).
+
 # Installation
 
 Install via npm:
@@ -58,7 +62,11 @@ The `params` parameter expects a JS object optionally containing some of the fol
 
 #### .vocab
 
+Number of unique words in the training corpus.
+
 #### .size
+
+Length of the learned word vectors. 
 
 ### Methods
 
