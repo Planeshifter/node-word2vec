@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Planeshifter/node-word2vec",
   "dependencies": {
+    "chai": "^1.10.0",
     "change-case": "^2.1.5",
     "charm": "^1.0.0",
     "mime": "^1.2.11",
