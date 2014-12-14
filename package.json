@@ -21,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/Planeshifter/node-word2vec/issues"
   },
-  "homepage": "https://github.com/Planeshifter/node-word2vec"
+  "homepage": "https://github.com/Planeshifter/node-word2vec",
+  "dependencies": {
+    "change-case": "^2.1.5",
+    "charm": "^1.0.0",
+    "mime": "^1.2.11",
+    "underscore": "^1.7.0"
+  }
 }
