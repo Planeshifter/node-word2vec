@@ -1,7 +1,7 @@
 {
   "name": "word2vec",
   "version": "0.4.1",
-  "description": " Wrapper of the Google word2vec tool",
+  "description": "node.js interface to the Google word2vec tool",
   "main": "lib/main.js",
   "scripts": {
     "test": "mocha test",
