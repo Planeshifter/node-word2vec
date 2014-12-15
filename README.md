@@ -140,8 +140,17 @@ Sample Output:
 ```
 
 #### .similarity(word1, word2)
+Calculates the word similarity between `word1` and `word2`.
 
+Example:
+```
+model.similarity("ham","cheese");
+```
 
+Sample Output:
+```
+0.4907762118841032
+```
 
 #### .mostSimilar(phrase, [number])
 Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned. 
