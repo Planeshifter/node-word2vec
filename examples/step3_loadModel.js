@@ -8,6 +8,6 @@ w2v.loadModel("../src/vectors.txt", function(err, model){
   console.log(similar);
   var analogy = model.analogy("woman",["man","king"], 10);
   console.log(analogy);
-  var similarity = model.similarity("ham","cheese");
+    var similarity = model.similarity("ham","cheese");
   console.log(similarity);
 });

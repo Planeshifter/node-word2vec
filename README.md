@@ -1,8 +1,12 @@
-[![NPM version](https://badge.fury.io/js/word2vec.svg)](http://badge.fury.io/js/word2vec)
-[![Build Status](https://travis-ci.org/Planeshifter/node-word2vec.svg)](https://travis-ci.org/Planeshifter/node-word2vec)
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
+[![Dependencies][dependencies-image]][dependencies-url]
 
 node-word2vec
 =============
+
+>
 
 # What is it?
 
@@ -25,9 +29,9 @@ w2v = require('word2vec');
 ## API
 
 ### .word2phrases(input, output, params)
-For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York". 
+For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York".
 
-Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`. 
+Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`.
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. If they are not supplied, the default values are used.
 
@@ -39,7 +43,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | debug         | sets debug mode      | 2 |
 
 ### .word2vec(input, output, params)
-This function calls Google's *word2vec* command line application and finds vector representations for the words in the `input` training corpus, writing the results to the `output` file. The output can then be loaded into node via the `loadModel` function, which exposes several methods to interact with the learned vector representations of the words. 
+This function calls Google's *word2vec* command line application and finds vector representations for the words in the `input` training corpus, writing the results to the `output` file. The output can then be loaded into node via the `loadModel` function, which exposes several methods to interact with the learned vector representations of the words.
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. For those missing, the default values are used:
 
@@ -90,7 +94,7 @@ Number of unique words in the training corpus.
 
 #### .size
 
-Length of the learned word vectors. 
+Length of the learned word vectors.
 
 ### Methods
 
@@ -106,7 +110,7 @@ model.getVectors(["king","queen","boy","girl"]);
 Sample Output:
 ```
 [ { word: 'king',
-    values: 
+    values:
      [ 0.006371254151248689,
        -0.04533821363410406,
        0.1589142808632736,
@@ -114,7 +118,7 @@ Sample Output:
        0.042080221123209825,
        -0.038347102017109225 ] },
   { word: 'queen',
-    values: 
+    values:
      [ 0.014399041122817985,
        -0.000026896638109750347,
        0.20398248693190596,
@@ -122,7 +126,7 @@ Sample Output:
        -0.05329081648586445,
        -0.012556868376422963 ] },
   { word: 'girl',
-    values: 
+    values:
      [ -0.1247347144692245,
        0.03834108759049417,
        -0.022911846734360187,
@@ -130,7 +134,7 @@ Sample Output:
        -0.0798994867922872,
        -0.11387393949666696 ] },
   { word: 'boy',
-    values: 
+    values:
      [ -0.05436531234037158,
        0.008874993957578164,
        -0.06711992414442335,
@@ -153,7 +157,7 @@ Sample Output:
 ```
 
 #### .mostSimilar(phrase, [number])
-Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned. 
+Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned.
 
 Example:
 ```
@@ -185,7 +189,7 @@ Sample Output:
 ```
 
 #### .analogy(word, pair, [number])
-For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned. 
+For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned.
 
 Example:
 ```
@@ -206,3 +210,24 @@ Sample Output:
   { word: 'charles_viii', dist: 0.4775804990655765 },
   { word: 'melisende', dist: 0.47663194967001704 } ]
 ```
+
+## Unit Tests
+
+Run tests via the command `npm test`
+
+---
+## License
+
+[Apache v2](http://www.apache.org/licenses/LICENSE-2.0).
+
+[npm-image]: https://badge.fury.io/js/word2vec.svg
+[npm-url]: http://badge.fury.io/js/word2vec
+
+[travis-image]: https://travis-ci.org/Planeshifter/node-word2vec.svg
+[travis-url]: https://travis-ci.org/Planeshifter/node-word2vec
+
+[coveralls-image]: https://img.shields.io/coveralls/Planeshifter/node-word2vec/master.svg
+[coveralls-url]: https://coveralls.io/r/Planeshifter/node-word2vec?branch=master
+
+[dependencies-image]: http://img.shields.io/david/Planeshifter/node-word2vec.svg
+[dependencies-url]: https://david-dm.org/Planeshifter/node-word2vec
