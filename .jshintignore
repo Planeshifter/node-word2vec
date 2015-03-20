@@ -1,0 +1,11 @@
+# Directories #
+###############
+reports/
+
+# Node.js #
+###########
+/node_modules/
+
+# Git #
+#######
+.git*

@@ -1,0 +1,23 @@
+# Git
+.git*
+
+# Utilities #
+#############
+.jshintrc
+.jshintignore
+.travis.yml
+.editorconfig
+
+# Directories #
+###############
+reports/
+test/
+
+# Node.js #
+###########
+.npmignore
+/node_modules/
+
+# Logs #
+########
+*.log
