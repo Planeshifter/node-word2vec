@@ -1,3 +1,5 @@
+'use strict';
+
 var w2v = require("../lib/main.js");
 
 w2v.word2vec("../src/phrases.txt","vectors.txt",{
