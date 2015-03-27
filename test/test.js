@@ -178,12 +178,12 @@ describe( 'word2vec', function tests() {
 		main.word2vec( path.resolve( __dirname + '/../data/phrases_input.txt' ), path.resolve( __dirname + '/../data/vectors.txt' ), {
 			cbow:1,
 			size: 200,
-			window:8,
+			window: 8,
 			negative: 25,
 			hs: 0,
-			sample:1e-4,
-			threads:20,
-			iter:15,
+			sample: 1e-4,
+			threads: 1,
+			iter: 15,
 			minCount: 5,
 			silent: true
 		}, function(err) {

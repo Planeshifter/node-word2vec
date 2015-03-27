@@ -12,6 +12,7 @@
 ###############
 reports/
 test/
+data/
 
 # Node.js #
 ###########
