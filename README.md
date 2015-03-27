@@ -103,7 +103,7 @@ Calculates the word similarity between `word1` and `word2`.
 
 Example:
 ```
-model.similarity("ham","cheese");
+model.similarity( 'ham', 'cheese' );
 ```
 
 Sample Output:
@@ -116,7 +116,7 @@ Calculates the cosine distance between the supplied phrase (a `string` which is 
 
 Example:
 ```
-model.mostSimilar(["switzerland"], 20);
+model.mostSimilar( 'switzerland', 20);
 ```
 Sample Output:
 
