@@ -28,7 +28,7 @@ w2v = require('word2vec');
 
 ## API
 
-### .word2phrases(input, output, params)
+### .word2phrases( input, output, params )
 For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York".
 
 Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`.
@@ -42,7 +42,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | threshold      | determines the number of phrases, higher value means less phrases   | 100 |
 | debug         | sets debug mode      | 2 |
 
-### .word2vec(input, output, params)
+### .word2vec( input, output, params )
 This function calls Google's *word2vec* command line application and finds vector representations for the words in the `input` training corpus, writing the results to the `output` file. The output can then be loaded into node via the `loadModel` function, which exposes several methods to interact with the learned vector representations of the words.
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. For those missing, the default values are used:
@@ -64,7 +64,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | readVocab | the vocabulary will be read from *readVocab* value , not constructed from the training data | |
 | cbow | use the continuous bag of words model | 1 (use 0 for skip-gram model) |
 
-###.loadModel(file, callback)
+###.loadModel( file, callback )
 
 This is the main function of the package, which loads a saved model file containing vector representations of words into memory. Such a file can be created by using the *word2vec* function. After the file is successfully loaded, the supplied callback function is fired, which following conventions has two parameters: `err` and `model`. If everything runs smoothly and no error occured, the first argument should be `null`. The `model` parameter is a model object holding all data and exposing the properties and methods explained in the *Model Object* section.
 
@@ -98,13 +98,102 @@ Length of the learned word vectors.
 
 ### Methods
 
-#### .getVectors([words])
-
-Returns the learned vector representations for the supplied words. If *words* is undefined, i.e. the function is evoked without passing it any arguments, it returns the vectors for all learned words.
+#### .similarity( word1, word2 )
+Calculates the word similarity between `word1` and `word2`.
 
 Example:
 ```
-model.getVectors(["king","queen","boy","girl"]);
+model.similarity("ham","cheese");
+```
+
+Sample Output:
+```
+0.4907762118841032
+```
+
+#### .mostSimilar( phrase[, number] )
+Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned.
+
+Example:
+```
+model.mostSimilar(["switzerland"], 20);
+```
+Sample Output:
+
+```
+[ { word: 'chur', dist: 0.6070252929307018 },
+  { word: 'ticino', dist: 0.6049085549621765 },
+  { word: 'bern', dist: 0.6001648890419077 },
+  { word: 'cantons', dist: 0.5822226582323267 },
+  { word: 'z_rich', dist: 0.5671853621346818 },
+  { word: 'iceland_norway', dist: 0.5651901750812693 },
+  { word: 'aargau', dist: 0.5590524831511438 },
+  { word: 'aarau', dist: 0.555220055372284 },
+  { word: 'zurich', dist: 0.5401119092258485 },
+  { word: 'berne', dist: 0.5391358099043649 },
+  { word: 'zug', dist: 0.5375590160292268 },
+  { word: 'swiss_confederation', dist: 0.5365824598661265 },
+  { word: 'germany', dist: 0.5337325187293028 },
+  { word: 'italy', dist: 0.5309218588704736 },
+  { word: 'alsace_lorraine', dist: 0.5270204106304165 },
+  { word: 'belgium_denmark', dist: 0.5247942780963807 },
+  { word: 'sweden_finland', dist: 0.5241634037188426 },
+  { word: 'canton', dist: 0.5212495170066538 },
+  { word: 'anterselva', dist: 0.5186651140386938 },
+  { word: 'belgium', dist: 0.5150383129735169 } ]
+```
+
+#### .analogy( word, pair[, number] )
+For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned.
+
+Example:
+```
+model.analogy("woman",["man","king"], 10);
+```
+
+Sample Output:
+
+```
+[ { word: 'queen', dist: 0.5607083309028658 },
+  { word: 'queen_consort', dist: 0.510974781496456 },
+  { word: 'crowned_king', dist: 0.5060923120115347 },
+  { word: 'isabella', dist: 0.49319425034513376 },
+  { word: 'matilda', dist: 0.4931204901924969 },
+  { word: 'dagmar', dist: 0.4910608716969606 },
+  { word: 'sibylla', dist: 0.4832698899279795 },
+  { word: 'died_childless', dist: 0.47957251302898396 },
+  { word: 'charles_viii', dist: 0.4775804990655765 },
+  { word: 'melisende', dist: 0.47663194967001704 } ]
+```
+
+#### .getVector( word )
+Returns the learned vector representations for the input `word`. If `word` does not exist in the vocabulary, the function returns `null`.
+
+Example:
+```
+model.getVector( 'king' );
+```
+
+Sample Output:
+```
+{ word: 'king',
+    values:
+     [ 0.006371254151248689,
+       -0.04533821363410406,
+       0.1589142808632736,
+      ...
+       0.042080221123209825,
+       -0.038347102017109225 ] }
+```
+
+
+#### .getVectors( [words] )
+
+Returns the learned vector representations for the supplied words. If *words* is undefined, i.e. the function is evoked without passing it any arguments, it returns the vectors for all learned words. The returned value is an `array` of objects which are instances of the class `WordVec`.
+
+Example:
+```
+model.getVectors( ["king", "queen", "boy", "girl"] );
 ```
 
 Sample Output:
@@ -143,73 +232,54 @@ Sample Output:
        -0.04885347925837509 ] } ]
 ```
 
-#### .similarity(word1, word2)
-Calculates the word similarity between `word1` and `word2`.
+#### .getNearestWord( vec )
+
+Returns the word which has the closest vector representation to the input `vec`. The function expects a word vector, either an instance of constructor `WordVector` or an array of Number values of length `size`. It returns the word in the vocabulary for which the distance between its vector and the supplied input vector is lowest.
 
 Example:
 ```
-model.similarity("ham","cheese");
+model.getNearestWord( model.getVector('empire') );
 ```
 
 Sample Output:
 ```
-0.4907762118841032
+{ word: 'empire', dist: 1.0000000000000002 }
 ```
 
-#### .mostSimilar(phrase, [number])
-Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned.
+#### .getNearestWords( vec[, number] )
 
-Example:
-```
-model.mostSimilar(["switzerland"], 20);
-```
-Sample Output:
-
-```
-[ { word: 'chur', dist: 0.6070252929307018 },
-  { word: 'ticino', dist: 0.6049085549621765 },
-  { word: 'bern', dist: 0.6001648890419077 },
-  { word: 'cantons', dist: 0.5822226582323267 },
-  { word: 'z_rich', dist: 0.5671853621346818 },
-  { word: 'iceland_norway', dist: 0.5651901750812693 },
-  { word: 'aargau', dist: 0.5590524831511438 },
-  { word: 'aarau', dist: 0.555220055372284 },
-  { word: 'zurich', dist: 0.5401119092258485 },
-  { word: 'berne', dist: 0.5391358099043649 },
-  { word: 'zug', dist: 0.5375590160292268 },
-  { word: 'swiss_confederation', dist: 0.5365824598661265 },
-  { word: 'germany', dist: 0.5337325187293028 },
-  { word: 'italy', dist: 0.5309218588704736 },
-  { word: 'alsace_lorraine', dist: 0.5270204106304165 },
-  { word: 'belgium_denmark', dist: 0.5247942780963807 },
-  { word: 'sweden_finland', dist: 0.5241634037188426 },
-  { word: 'canton', dist: 0.5212495170066538 },
-  { word: 'anterselva', dist: 0.5186651140386938 },
-  { word: 'belgium', dist: 0.5150383129735169 } ]
-```
-
-#### .analogy(word, pair, [number])
-For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned.
+Returns the words whose vector representations are closest to input `vec`. The first parameter of the function expects a word vector, either an instance of constructor `WordVector` or an array of Number values of length `size`. The second parameter, `number`, is optional and specifies the number of returned words. If not supplied, a default value of `10` is used.
 
 Example:
 ```
-model.analogy("woman",["man","king"], 10);
+model.getNearestWords( model.getVector( 'man' ), 3 )
 ```
 
 Sample Output:
+```
+[ { word: 'man', dist: 1.0000000000000002 },
+  { word: 'woman', dist: 0.5731114915085445 },
+  { word: 'boy', dist: 0.49110060323870924 }
+]
+```
 
-```
-[ { word: 'queen', dist: 0.5607083309028658 },
-  { word: 'queen_consort', dist: 0.510974781496456 },
-  { word: 'crowned_king', dist: 0.5060923120115347 },
-  { word: 'isabella', dist: 0.49319425034513376 },
-  { word: 'matilda', dist: 0.4931204901924969 },
-  { word: 'dagmar', dist: 0.4910608716969606 },
-  { word: 'sibylla', dist: 0.4832698899279795 },
-  { word: 'died_childless', dist: 0.47957251302898396 },
-  { word: 'charles_viii', dist: 0.4775804990655765 },
-  { word: 'melisende', dist: 0.47663194967001704 } ]
-```
+## WordVector
+
+### Properties
+
+#### .word
+The word in the vocabulary.
+
+#### .values
+The learned vector representation for the word, an array of length `size`.
+
+### Methods
+
+#### .add( wordVector )
+Adds the vector of the input `wordVector` to the vector `.values`.
+
+#### .subtract( wordVector )
+Subtracts the vector of the input `wordVector` to the vector `.values`.
 
 ## Unit Tests
 
