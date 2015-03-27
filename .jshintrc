@@ -61,6 +61,7 @@
 	"nonstandard": false,
 	"prototypejs": false,
 	"qunit": false,
+	"quotmark": "single",
 	"rhino": false,
 	"shelljs": false,
 	"worker": false,
