@@ -36,7 +36,7 @@ describe( 'loadModel', function tests() {
 	});
 
 	it( 'successfully loads a model file', function test() {
-		main.loadModel( file, function( err, model ) {
+		main.loadModel( file, function( err  ) {
 			expect(err).to.be.null;
 		});
 	});
@@ -125,14 +125,70 @@ describe( 'loadModel', function tests() {
 
 });
 
-describe( 'word2vec', function tests() {
-	it( 'is a callable function', function test() {
-		expect(main.word2vec).to.be.a( 'function' );
+describe( 'WordVector', function tests() {
+	it( 'can be added to each other', function test( done ) {
+		main.loadModel( file, function( err, model ) {
+			var wordVec1 = model.getVector( 'and' );
+			var wordVec2 = model.getVector( 'any' );
+			var result =  wordVec1.add( wordVec2 );
+			expect( result ).to.be.a.instanceOf( main.WordVector );
+			done();
+		});
+	});
+
+	it( 'can be subtracted from each other', function test( done ) {
+		main.loadModel( file, function( err, model ) {
+			var wordVec1 = model.getVector( 'and' );
+			var wordVec2 = model.getVector( 'any' );
+			var result =  wordVec1.subtract( wordVec2 );
+			expect( result ).to.be.a.instanceOf( main.WordVector );
+			done();
+		});
 	});
 });
 
 describe( 'word2phrase', function tests() {
 	it( 'is a callable function', function test() {
 		expect(main.word2phrase).to.be.a( 'function' );
+	});
+
+	it( 'can be called successfully', function test( done ) {
+		main.word2phrase( path.resolve( __dirname + '/../data/input.txt' ), path.resolve( __dirname + '/../data/phrases.txt' ), {
+			threshold: 1,
+			debug: 2,
+			minCount: 1,
+			silent: true
+		}, function(err) {
+			expect( err === 0 ).to.be.true;
+			done();
+		});
+	});
+});
+
+
+describe( 'word2vec', function tests() {
+	this.timeout( 15000 );
+
+	it( 'is a callable function', function test() {
+		expect(main.word2vec).to.be.a( 'function' );
+	});
+
+	it( 'can be called successfully', function test( done ) {
+
+		main.word2vec( path.resolve( __dirname + '/../data/phrases_input.txt' ), path.resolve( __dirname + '/../data/vectors.txt' ), {
+			cbow:1,
+			size: 200,
+			window:8,
+			negative: 25,
+			hs: 0,
+			sample:1e-4,
+			threads:20,
+			iter:15,
+			minCount: 5,
+			silent: true
+		}, function(err) {
+			expect( err === 0 ).to.be.true;
+			done();
+		});
 	});
 });
