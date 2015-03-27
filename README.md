@@ -6,7 +6,7 @@
 node-word2vec
 =============
 
->
+> node.js interface to the Google [word2vec](https://code.google.com/p/word2vec/) tool
 
 # What is it?
 
