@@ -163,36 +163,38 @@ describe( 'word2phrase', function tests() {
 			silent: true
 		}, function(err) {
 			expect( err === 0 ).to.be.true;
+			startWord2Vec();
 			done();
 		});
 	});
 });
 
+function startWord2Vec() {
+	describe( 'word2vec', function tests() {
 
-describe( 'word2vec', function tests() {
-	
-	this.timeout( 15000 );
+		this.timeout( 15000 );
 
-	it( 'is a callable function', function test() {
-		expect(main.word2vec).to.be.a( 'function' );
-	});
+		it( 'is a callable function', function test() {
+			expect(main.word2vec).to.be.a( 'function' );
+		});
 
-	it( 'can be called successfully', function test( done ) {
+		it( 'can be called successfully', function test( done ) {
 
-		main.word2vec( path.resolve( __dirname + '/../data/phrases_input.txt' ), path.resolve( __dirname + '/../data/vectors.txt' ), {
-			cbow:1,
-			size: 200,
-			window: 8,
-			negative: 25,
-			hs: 0,
-			sample: 1e-4,
-			threads: 1,
-			iter: 15,
-			minCount: 5,
-			silent: true
-		}, function(err) {
-			expect( err === 0 ).to.be.true;
-			done();
+			main.word2vec( path.resolve( __dirname + '/../data/phrases_input.txt' ), path.resolve( __dirname + '/../data/vectors.txt' ), {
+				cbow:1,
+				size: 200,
+				window: 8,
+				negative: 25,
+				hs: 0,
+				sample: 1e-4,
+				threads: 1,
+				iter: 15,
+				minCount: 5,
+				silent: true
+			}, function(err) {
+				expect( err === 0 ).to.be.true;
+				done();
+			});
 		});
 	});
-});
+}
