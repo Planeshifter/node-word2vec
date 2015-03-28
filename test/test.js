@@ -148,6 +148,9 @@ describe( 'WordVector', function tests() {
 });
 
 describe( 'word2phrase', function tests() {
+
+	this.timeout( 15000 );
+
 	it( 'is a callable function', function test() {
 		expect(main.word2phrase).to.be.a( 'function' );
 	});
@@ -167,6 +170,7 @@ describe( 'word2phrase', function tests() {
 
 
 describe( 'word2vec', function tests() {
+	
 	this.timeout( 15000 );
 
 	it( 'is a callable function', function test() {
