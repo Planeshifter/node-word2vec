@@ -10,5 +10,6 @@ before_install:
 - make clean 
 - make all
 - cd ..
+- ulimit -n 2000
 after_script:
 - npm run coveralls
