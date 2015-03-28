@@ -18,7 +18,7 @@
 #include <math.h>
 #include <pthread.h>
 
-#define MAX_STRING 60
+#define MAX_STRING 180
 
 const int vocab_hash_size = 500000000; // Maximum 500M entries in the vocabulary
 
