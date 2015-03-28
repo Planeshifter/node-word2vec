@@ -7,7 +7,8 @@ node_js:
 before_install:
 - npm update -g npm
 - cd src
-- make
+- make clean 
+- make all
 - cd ..
 after_script:
 - npm run coveralls
