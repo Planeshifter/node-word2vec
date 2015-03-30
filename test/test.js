@@ -6,6 +6,8 @@ var chai = require( 'chai' );
 var expect = chai.expect;
 var path = require( 'path' );
 var file = path.normalize(__dirname + '/../data/test.txt');
+var fileBin = path.normalize(__dirname + '/../data/test.bin');
+var assert = require("assert")
 
 describe( 'loadModel', function tests() {
 
@@ -33,6 +35,12 @@ describe( 'loadModel', function tests() {
 				main.loadModel( value );
 			};
 		}
+	});
+
+	it( 'successfully loads a binary model file', function test() {
+		main.loadModel( fileBin, function( err  ) {
+			expect(err).to.be.null;
+		});
 	});
 
 	it( 'successfully loads a model file', function test() {
