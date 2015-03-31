@@ -7,7 +7,6 @@ var expect = chai.expect;
 var path = require( 'path' );
 var file = path.normalize(__dirname + '/../data/test.txt');
 var fileBin = path.normalize(__dirname + '/../data/test.bin');
-var assert = require("assert")
 
 describe( 'loadModel', function tests() {
 
