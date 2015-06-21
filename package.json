@@ -1,24 +1,26 @@
 {
   "name": "word2vec",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "node.js interface to the Google word2vec tool",
   "main": "lib/main.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "prepublish": "make --directory=src",
-    "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coverage -- -R spec",
-    "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coveralls/coverage --report lcovonly -- -R spec && cat ./reports/coveralls/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./reports/coveralls"
+    "test": "mocha",
+    "postinstall": "make --directory=src",
+    "test-cov": "istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coverage -- -R spec",
+    "coveralls": "istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coveralls/coverage --report lcovonly -- -R spec && cat ./reports/coveralls/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./reports/coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Planeshifter/node-word2vec.git"
+    "url": "git+https://github.com/Planeshifter/node-word2vec.git"
   },
   "keywords": [
     "text-analytics",
     "deep-learning",
     "word-distance"
   ],
-  "author": "Philipp Burckhardt",
+  "author": {
+    "name": "Philipp Burckhardt"
+  },
   "license": "APA-2",
   "bugs": {
     "url": "https://github.com/Planeshifter/node-word2vec/issues"
@@ -31,9 +33,9 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "chai": "^2.1.2",
+    "chai": "3.x.x",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.8",
-    "mocha": "^2.2.1"
+    "mocha": "2.x.x"
   }
 }
