@@ -68,7 +68,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | cbow | use the continuous bag of words model | 1 (use 0 for skip-gram model) |
 | silent | sets whether any output should be printed to the console | false |
 
-After successful execution, the supplied `callback` function is invoked. It receives the number of the exit code as its first parameter. 
+After successful execution, the supplied `callback` function is invoked. It receives the number of the exit code as its first parameter.
 
 ###.loadModel( file, callback )
 
@@ -290,6 +290,21 @@ Subtracts the vector of the input `wordVector` to the vector `.values`.
 ## Unit Tests
 
 Run tests via the command `npm test`
+
+## Build from Source
+
+Clone the git repository with the command
+
+``` bash
+$ git clone https://github.com/Planeshifter/node-word2vec.git
+```
+
+Change into the project directory and compile the C source files via
+
+``` bash
+$ cd node-word2vec
+$ make --directory=src
+```
 
 ---
 ## License
