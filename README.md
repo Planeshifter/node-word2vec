@@ -1,6 +1,6 @@
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
+[![Coverage Status][codecov-image]][codecov-url]
 [![Dependencies][dependencies-image]][dependencies-url]
 
 node-word2vec
@@ -317,8 +317,8 @@ $ make --directory=src
 [travis-image]: https://travis-ci.org/Planeshifter/node-word2vec.svg
 [travis-url]: https://travis-ci.org/Planeshifter/node-word2vec
 
-[coveralls-image]: https://img.shields.io/coveralls/Planeshifter/node-word2vec/master.svg
-[coveralls-url]: https://coveralls.io/r/Planeshifter/node-word2vec?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/Planeshifter/node-word2vec/master.svg
+[codecov-url]: https://codecov.io/github/Planeshifter/node-word2vec?branch=master
 
-[dependencies-image]: http://img.shields.io/david/Planeshifter/node-word2vec.svg
+[dependencies-image]: https://david-dm.org/Planeshifter/node-word2vec.svg
 [dependencies-url]: https://david-dm.org/Planeshifter/node-word2vec

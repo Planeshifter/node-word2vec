@@ -7,9 +7,9 @@ node_js:
 before_install:
 - npm update -g npm
 - cd src
-- make clean 
+- make clean
 - make all
 - cd ..
 - ulimit -n 20000
 after_script:
-- npm run coveralls
+- npm run codecov
