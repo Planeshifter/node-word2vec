@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "chai": "3.x.x",
-    "coveralls": "^2.11.2",
+    "codecov.io": "^0.1.5",
     "istanbul": "^0.3.8",
     "mocha": "2.x.x"
   }
