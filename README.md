@@ -63,6 +63,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 | alpha | sets the starting learning rate  |  0.025 for skip-gram and 0.05 for CBOW |
 | classes | output word classes rather than word vectors | 0 (vectors are written) |
 | debug | sets debug mode  | 2 |
+| binary | save the resulting vectors in binary mode | 0 (off) |
 | saveVocab | the vocabulary will be saved to *saveVocab* value |  |
 | readVocab | the vocabulary will be read from *readVocab* value , not constructed from the training data | |
 | cbow | use the continuous bag of words model | 1 (use 0 for skip-gram model) |
