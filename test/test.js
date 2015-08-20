@@ -37,8 +37,10 @@ describe( 'loadModel', function tests() {
 	});
 
 	it( 'successfully loads a binary model file', function test() {
-		main.loadModel( fileBin, function( err  ) {
+		main.loadModel( fileBin, function( err, model  ) {
 			expect(err).to.be.null;
+			expect( model.words ).to.be.equal( 34 );
+			expect( model.size ).to.be.equal( 50 );
 		});
 	});
 
