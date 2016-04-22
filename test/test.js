@@ -1,12 +1,20 @@
 'use strict';
 
-var main = require( '../lib/main.js' );
+// MODULES //
 
+var main = require( './../lib/index.js' );
 var chai = require( 'chai' );
 var expect = chai.expect;
 var path = require( 'path' );
-var file = path.normalize(__dirname + '/../data/test.txt');
-var fileBin = path.normalize(__dirname + '/../data/test.bin');
+
+
+// FIXTURES //
+
+var file = path.normalize( __dirname + '/fixtures/test.txt' );
+var fileBin = path.normalize( __dirname + '/fixtures/test.bin' );
+
+
+// TESTS //
 
 describe( 'loadModel', function tests() {
 
