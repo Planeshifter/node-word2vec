@@ -1,6 +1,6 @@
 {
   "name": "word2vec",
-  "version": "0.9.2",
+  "version": "1.1.0",
   "description": "node.js interface to the Google word2vec tool",
   "main": "lib/index.js",
   "scripts": {
