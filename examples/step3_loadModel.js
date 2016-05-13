@@ -6,7 +6,6 @@ w2v.loadModel( __dirname + '/fixtures/vectors.txt', function( err, model ) {
 	console.log( model );
 
 	var wordVecs = model.getVectors( [ 'Hamlet', 'daughter' ] );
-	console.log( wordVecs );
 	console.log( model.getNearestWord( wordVecs[0].values, 1 ) );
 
 	var similar = model.mostSimilar( 'dead', 20 );
