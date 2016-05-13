@@ -122,7 +122,7 @@ Sample Output:
 ```
 
 #### .mostSimilar( phrase[, number] )
-Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned.
+Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned. If none of the words in the phrase appears in the dictionary, the function returns `null`. In all other cases, unknown words will be dropped in the computation of the cosine distance.
 
 Example:
 ``` javascript
