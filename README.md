@@ -78,8 +78,8 @@ This is the main function of the package, which loads a saved model file contain
 
 Example:
 ``` javascript
-w2v.loadModel( './vectors.txt', function(err, model){
-	console.log(model)
+w2v.loadModel( './vectors.txt', function( error, model ) {
+	console.log( model );
 });
 ```
 Sample Output:
@@ -268,7 +268,7 @@ Sample Output:
 Returns the word which has the closest vector representation to the input `vec`. The function expects a word vector, either an instance of constructor `WordVector` or an array of Number values of length `size`. It returns the word in the vocabulary for which the distance between its vector and the supplied input vector is lowest.
 
 Example:
-```
+``` javascript
 model.getNearestWord( model.getVector('empire') );
 ```
 
