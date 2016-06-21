@@ -6,20 +6,22 @@
 node-word2vec
 =============
 
-> node.js interface to the Google [word2vec](https://code.google.com/p/word2vec/) tool
+> Node.js interface to the Google [word2vec](https://code.google.com/p/word2vec/) tool
 
 # What is it?
 
-This is a node.js interface to the *word2vec* tool developed at Google Research for "efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words", which can be used in a variety of NLP tasks. For further information about the *word2vec* project, consult [https://code.google.com/p/word2vec/](https://code.google.com/p/word2vec/).
+This is a Node.js interface to the *word2vec* tool developed at Google Research for "efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words", which can be used in a variety of NLP tasks. For further information about the *word2vec* project, consult [https://code.google.com/p/word2vec/](https://code.google.com/p/word2vec/).
 
 # Installation
 
-Install via npm:
+Currently, `node-word2vec` is ONLY supported for Unix operating systems.
+
+Install it via npm:
 ``` bash
 npm install word2vec
 ```
 
-To use it inside node.js, require the module as follows:
+To use it inside Node.js, require the module as follows:
 
 ``` javascript
 var w2v = require( 'word2vec' );
