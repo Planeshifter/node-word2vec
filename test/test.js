@@ -12,6 +12,9 @@ var path = require( 'path' );
 
 var file = path.normalize( __dirname + '/fixtures/test.txt' );
 var fileBin = path.normalize( __dirname + '/fixtures/test.bin' );
+var vectors = path.normalize( __dirname + '/fixtures/vectors.txt' );
+var phrases = path.normalize( __dirname + '/fixtures/phrases.txt' );
+var input = path.normalize( __dirname + '/fixtures/input.txt' );
 
 
 // TESTS //
@@ -124,6 +127,20 @@ describe( 'loadModel', function tests() {
 			main.loadModel( file, function( err, model ) {
 				var res = model.similarity( 'political', 'theory' );
 				expect( res ).to.be.a( 'number' );
+
+				res = model.similarity( 'political', 'political' );
+				expect( res ).to.be.a( 'number' );
+				expect( res ).to.equal( 1.0 );
+
+				done();
+			});
+		});
+
+		it( 'returns 1.0 for two identical words', function test( done ) {
+			main.loadModel( file, function( err, model ) {
+				var res = model.similarity( 'political', 'political' );
+				expect( res ).to.be.a( 'number' );
+				expect( res ).to.equal( 1.0 );
 				done();
 			});
 		});
@@ -173,12 +190,13 @@ describe( 'word2phrase', function tests() {
 	});
 
 	it( 'can be called successfully', function test( done ) {
-		main.word2phrase( path.resolve( __dirname + '/../data/input.txt' ), path.resolve( __dirname + '/../data/phrases.txt' ), {
+		main.word2phrase( input, phrases, {
 			threshold: 1,
 			debug: 2,
 			minCount: 1,
 			silent: true
 		}, function(err) {
+			console.log( err )
 			expect( err === 0 ).to.be.true;
 			startWord2Vec();
 			done();
@@ -197,7 +215,7 @@ function startWord2Vec() {
 
 		it( 'can be called successfully', function test( done ) {
 
-			main.word2vec( path.resolve( __dirname + '/../data/phrases_input.txt' ), path.resolve( __dirname + '/../data/vectors.txt' ), {
+			main.word2vec( input, vectors, {
 				cbow:1,
 				size: 200,
 				window: 8,
