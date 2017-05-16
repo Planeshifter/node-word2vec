@@ -127,11 +127,6 @@ describe( 'loadModel', function tests() {
 			main.loadModel( file, function( err, model ) {
 				var res = model.similarity( 'political', 'theory' );
 				expect( res ).to.be.a( 'number' );
-
-				res = model.similarity( 'political', 'political' );
-				expect( res ).to.be.a( 'number' );
-				expect( res ).to.equal( 1.0 );
-
 				done();
 			});
 		});
@@ -196,7 +191,6 @@ describe( 'word2phrase', function tests() {
 			minCount: 1,
 			silent: true
 		}, function(err) {
-			console.log( err )
 			expect( err === 0 ).to.be.true;
 			startWord2Vec();
 			done();
