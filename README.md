@@ -31,7 +31,7 @@ var w2v = require( 'word2vec' );
 
 ## API
 
-### .word2phrases( input, output, params, callback )
+### .word2phrase( input, output, params, callback )
 For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York".
 
 Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`.
