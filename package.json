@@ -29,13 +29,13 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "charm": "^1.0.0",
-    "mime": "^1.2.11",
+    "mime": "^2.4.0",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "chai": "3.x.x",
+    "chai": "4.x.x",
     "codecov.io": "^0.1.5",
-    "istanbul": "^0.3.8",
-    "mocha": "2.x.x"
+    "istanbul": "^0.4.5",
+    "mocha": "5.x.x"
   }
 }

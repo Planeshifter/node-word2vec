@@ -32,6 +32,7 @@ var w2v = require( 'word2vec' );
 ## API
 
 ### .word2phrase( input, output, params, callback )
+
 For applications where it is important that certain pairs of words are treated as a single term (e.g. "Barack Obama" or "New York" should be treated as one word), the text corpora used for training should be pre-processed via the *word2phrases* function. Words which frequently occur next to each other will be concatenated via an underscore, e.g. the words "New" and "York" if following next to each other might be transformed to a single word "New_York".
 
 Internally, this function calls the C command line application of the Google *word2vec* project. This allows it to make use of multi-threading and preserves the efficiency of the original C code. It processes the texts given by the `input` text document, writing the output to a file with the name given by `output`.
@@ -49,6 +50,7 @@ The `params` parameter expects a JS object optionally containing some of the fol
 After successful execution, the supplied `callback` function is invoked. It receives the number of the exit code as its first parameter.
 
 ### .word2vec( input, output, params, callback )
+
 This function calls Google's *word2vec* command line application and finds vector representations for the words in the `input` training corpus, writing the results to the `output` file. The output can then be loaded into node via the `loadModel` function, which exposes several methods to interact with the learned vector representations of the words.
 
 The `params` parameter expects a JS object optionally containing some of the following keys and associated values. For those missing, the default values are used:
@@ -81,18 +83,18 @@ This is the main function of the package, which loads a saved model file contain
 Example:
 ``` javascript
 w2v.loadModel( './vectors.txt', function( error, model ) {
-	console.log( model );
+    console.log( model );
 });
 ```
 Sample Output:
 
 ``` javascript
 {
-	getVectors: [Function],
-	distance: [Function: distance],
-	analogy: [Function: analogy],
-	words: '98331',
-	size: '200'
+    getVectors: [Function],
+    distance: [Function: distance],
+    analogy: [Function: analogy],
+    words: '98331',
+    size: '200'
 }
 ```
 
@@ -124,6 +126,7 @@ Sample Output:
 ```
 
 #### .mostSimilar( phrase[, number] )
+
 Calculates the cosine distance between the supplied phrase (a `string` which is internally converted to an Array of words, which result in a *phrase vector*) and the other word vectors of the vocabulary. Returned are the `number` words with the highest similarity to the supplied phrase. If `number` is not supplied, by default the *40* highest scoring words are returned. If none of the words in the phrase appears in the dictionary, the function returns `null`. In all other cases, unknown words will be dropped in the computation of the cosine distance.
 
 Example:
@@ -134,30 +137,31 @@ Sample Output:
 
 ``` javascript
 [
-	{ word: 'chur', dist: 0.6070252929307018 },
-	{ word: 'ticino', dist: 0.6049085549621765 },
-	{ word: 'bern', dist: 0.6001648890419077 },
-	{ word: 'cantons', dist: 0.5822226582323267 },
-	{ word: 'z_rich', dist: 0.5671853621346818 },
-	{ word: 'iceland_norway', dist: 0.5651901750812693 },
-	{ word: 'aargau', dist: 0.5590524831511438 },
-	{ word: 'aarau', dist: 0.555220055372284 },
-	{ word: 'zurich', dist: 0.5401119092258485 },
-	{ word: 'berne', dist: 0.5391358099043649 },
-	{ word: 'zug', dist: 0.5375590160292268 },
-	{ word: 'swiss_confederation', dist: 0.5365824598661265 },
-	{ word: 'germany', dist: 0.5337325187293028 },
-	{ word: 'italy', dist: 0.5309218588704736 },
-	{ word: 'alsace_lorraine', dist: 0.5270204106304165 },
-	{ word: 'belgium_denmark', dist: 0.5247942780963807 },
-	{ word: 'sweden_finland', dist: 0.5241634037188426 },
-	{ word: 'canton', dist: 0.5212495170066538 },
-	{ word: 'anterselva', dist: 0.5186651140386938 },
-	{ word: 'belgium', dist: 0.5150383129735169 }
+    { word: 'chur', dist: 0.6070252929307018 },
+    { word: 'ticino', dist: 0.6049085549621765 },
+    { word: 'bern', dist: 0.6001648890419077 },
+    { word: 'cantons', dist: 0.5822226582323267 },
+    { word: 'z_rich', dist: 0.5671853621346818 },
+    { word: 'iceland_norway', dist: 0.5651901750812693 },
+    { word: 'aargau', dist: 0.5590524831511438 },
+    { word: 'aarau', dist: 0.555220055372284 },
+    { word: 'zurich', dist: 0.5401119092258485 },
+    { word: 'berne', dist: 0.5391358099043649 },
+    { word: 'zug', dist: 0.5375590160292268 },
+    { word: 'swiss_confederation', dist: 0.5365824598661265 },
+    { word: 'germany', dist: 0.5337325187293028 },
+    { word: 'italy', dist: 0.5309218588704736 },
+    { word: 'alsace_lorraine', dist: 0.5270204106304165 },
+    { word: 'belgium_denmark', dist: 0.5247942780963807 },
+    { word: 'sweden_finland', dist: 0.5241634037188426 },
+    { word: 'canton', dist: 0.5212495170066538 },
+    { word: 'anterselva', dist: 0.5186651140386938 },
+    { word: 'belgium', dist: 0.5150383129735169 }
 ]
 ```
 
 #### .analogy( word, pair[, number] )
+
 For a pair of words in a relationship such as `man` and `king`, this function tries to find the term which stands in an analogous relationship to the supplied `word`. If `number` is not supplied, by default the *40* highest-scoring results are returned.
 
 Example:
@@ -169,20 +173,21 @@ Sample Output:
 
 ``` javascript
 [
-	{ word: 'queen', dist: 0.5607083309028658 },
-	{ word: 'queen_consort', dist: 0.510974781496456 },
-	{ word: 'crowned_king', dist: 0.5060923120115347 },
-	{ word: 'isabella', dist: 0.49319425034513376 },
-	{ word: 'matilda', dist: 0.4931204901924969 },
-	{ word: 'dagmar', dist: 0.4910608716969606 },
-	{ word: 'sibylla', dist: 0.4832698899279795 },
-	{ word: 'died_childless', dist: 0.47957251302898396 },
-	{ word: 'charles_viii', dist: 0.4775804990655765 },
-	{ word: 'melisende', dist: 0.47663194967001704 }
+    { word: 'queen', dist: 0.5607083309028658 },
+    { word: 'queen_consort', dist: 0.510974781496456 },
+    { word: 'crowned_king', dist: 0.5060923120115347 },
+    { word: 'isabella', dist: 0.49319425034513376 },
+    { word: 'matilda', dist: 0.4931204901924969 },
+    { word: 'dagmar', dist: 0.4910608716969606 },
+    { word: 'sibylla', dist: 0.4832698899279795 },
+    { word: 'died_childless', dist: 0.47957251302898396 },
+    { word: 'charles_viii', dist: 0.4775804990655765 },
+    { word: 'melisende', dist: 0.47663194967001704 }
 ]
 ```
 
 #### .getVector( word )
+
 Returns the learned vector representations for the input `word`. If `word` does not exist in the vocabulary, the function returns `null`.
 
 Example:
@@ -193,18 +198,17 @@ model.getVector( 'king' );
 Sample Output:
 ``` javascript
 {
-	word: 'king',
-	values: [
-		0.006371254151248689,
-		-0.04533821363410406,
-		0.1589142808632736,
-		...
-		0.042080221123209825,
-		-0.038347102017109225
-	]
+    word: 'king',
+    values: [
+        0.006371254151248689,
+        -0.04533821363410406,
+        0.1589142808632736,
+        ...
+        0.042080221123209825,
+        -0.038347102017109225
+    ]
 }
 ```
-
 
 #### .getVectors( [words] )
 
@@ -218,50 +222,50 @@ model.getVectors( [ 'king', 'queen', 'boy', 'girl' ] );
 Sample Output:
 ``` javascript
 [
-	{
-		word: 'king',
-		values: [
-			0.006371254151248689,
-			-0.04533821363410406,
-			0.1589142808632736,
-			...
-			0.042080221123209825,
-			-0.038347102017109225
-		]
-	},
-	{
-		word: 'queen',
-		values: [
-			0.014399041122817985,
-			-0.000026896638109750347,
-			0.20398248693190596,
-			...
-			-0.05329081648586445,
-			-0.012556868376422963
-		]
-	},
-	{
-		word: 'girl',
-		values: [
-			-0.1247347144692245,
-			0.03834108759049417,
-			-0.022911846734360187,
-			...
-			-0.0798994867922872,
-			-0.11387393949666696
-		]
-	},
-	{
-		word: 'boy',
-		values: [
-			-0.05436531234037158,
-			0.008874993957578164,
-			-0.06711992414442335,
-			...
-			0.05673998568026764,
-			-0.04885347925837509
-		]
-	}
+    {
+        word: 'king',
+        values: [
+            0.006371254151248689,
+            -0.04533821363410406,
+            0.1589142808632736,
+            ...
+            0.042080221123209825,
+            -0.038347102017109225
+        ]
+    },
+    {
+        word: 'queen',
+        values: [
+            0.014399041122817985,
+            -0.000026896638109750347,
+            0.20398248693190596,
+            ...
+            -0.05329081648586445,
+            -0.012556868376422963
+        ]
+    },
+    {
+        word: 'girl',
+        values: [
+            -0.1247347144692245,
+            0.03834108759049417,
+            -0.022911846734360187,
+            ...
+            -0.0798994867922872,
+            -0.11387393949666696
+        ]
+    },
+    {
+        word: 'boy',
+        values: [
+            -0.05436531234037158,
+            0.008874993957578164,
+            -0.06711992414442335,
+            ...
+            0.05673998568026764,
+            -0.04885347925837509
+        ]
+    }
 ]
 ```
 
@@ -291,9 +295,9 @@ model.getNearestWords( model.getVector( 'man' ), 3 )
 Sample Output:
 ``` javascript
 [
-	{ word: 'man', dist: 1.0000000000000002 },
-	{ word: 'woman', dist: 0.5731114915085445 },
-	{ word: 'boy', dist: 0.49110060323870924 }
+    { word: 'man', dist: 1.0000000000000002 },
+    { word: 'woman', dist: 0.5731114915085445 },
+    { word: 'boy', dist: 0.49110060323870924 }
 ]
 ```
 
