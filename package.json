@@ -36,6 +36,6 @@
     "chai": "4.x.x",
     "codecov.io": "^0.1.5",
     "istanbul": "^0.4.5",
-    "mocha": "5.x.x"
+    "mocha": "6.x.x"
   }
 }
