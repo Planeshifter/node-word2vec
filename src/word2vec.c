@@ -17,7 +17,9 @@
 #include <string.h>
 #include <math.h>
 #include <pthread.h>
-
+#ifdef _WIN32
+#include <malloc.h>
+#endif
 #define MAX_STRING 100
 #define EXP_TABLE_SIZE 1000
 #define MAX_EXP 6
@@ -43,7 +45,7 @@ long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100;
 long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0;
 real alpha = 0.025, starting_alpha, sample = 1e-3;
 real *syn0, *syn1, *syn1neg, *expTable;
-clock_t start;
+int start;
 
 int hs = 0, negative = 5;
 const int table_size = 1e8;
@@ -335,27 +337,82 @@ void ReadVocab() {
   fclose(fin);
 }
 
-void InitNet() {
+void InitNet()
+{
   long long a, b;
   unsigned long long next_random = 1;
-  a = posix_memalign((void **)&syn0, 128, (long long)vocab_size * layer1_size * sizeof(real));
-  if (syn0 == NULL) {printf("Memory allocation failed\n"); exit(1);}
-  if (hs) {
-    a = posix_memalign((void **)&syn1, 128, (long long)vocab_size * layer1_size * sizeof(real));
-    if (syn1 == NULL) {printf("Memory allocation failed\n"); exit(1);}
-    for (a = 0; a < vocab_size; a++) for (b = 0; b < layer1_size; b++)
-     syn1[a * layer1_size + b] = 0;
+
+#ifdef _WIN32
+  syn0 = (real *)_aligned_malloc((long long)vocab_size * layer1_size * sizeof(real), 128);
+#else
+  if (posix_memalign((void **)&syn0, 128, (long long)vocab_size * layer1_size * sizeof(real)) != 0)
+  {
+    syn0 = NULL;
   }
-  if (negative>0) {
-    a = posix_memalign((void **)&syn1neg, 128, (long long)vocab_size * layer1_size * sizeof(real));
-    if (syn1neg == NULL) {printf("Memory allocation failed\n"); exit(1);}
-    for (a = 0; a < vocab_size; a++) for (b = 0; b < layer1_size; b++)
-     syn1neg[a * layer1_size + b] = 0;
+#endif
+  if (syn0 == NULL)
+  {
+    printf("Memory allocation failed\n");
+    exit(1);
   }
-  for (a = 0; a < vocab_size; a++) for (b = 0; b < layer1_size; b++) {
+
+  if (hs)
+  {
+#ifdef _WIN32
+    syn1 = (real *)_aligned_malloc((long long)vocab_size * layer1_size * sizeof(real), 128);
+#else
+    if (posix_memalign((void **)&syn1, 128, (long long)vocab_size * layer1_size * sizeof(real)) != 0)
+    {
+      syn1 = NULL;
+    }
+#endif
+    if (syn1 == NULL)
+    {
+      printf("Memory allocation failed\n");
+      exit(1);
+    }
+    for (a = 0; a < vocab_size; a++)
+    {
+      for (b = 0; b < layer1_size; b++)
+      {
+        syn1[a * layer1_size + b] = 0;
+      }
+    }
+  }
+
+  if (negative > 0)
+  {
+#ifdef _WIN32
+    syn1neg = (real *)_aligned_malloc((long long)vocab_size * layer1_size * sizeof(real), 128);
+#else
+    if (posix_memalign((void **)&syn1neg, 128, (long long)vocab_size * layer1_size * sizeof(real)) != 0)
+    {
+      syn1neg = NULL;
+    }
+#endif
+    if (syn1neg == NULL)
+    {
+      printf("Memory allocation failed\n");
+      exit(1);
+    }
+    for (a = 0; a < vocab_size; a++)
+    {
+      for (b = 0; b < layer1_size; b++)
+      {
+        syn1neg[a * layer1_size + b] = 0;
+      }
+    }
+  }
+
+  for (a = 0; a < vocab_size; a++)
+  {
+ for (b = 0; b < layer1_size; b++)
+ {
     next_random = next_random * (unsigned long long)25214903917 + 11;
     syn0[a * layer1_size + b] = (((next_random & 0xFFFF) / (real)65536) - 0.5) / layer1_size;
+    }
   }
+
   CreateBinaryTree();
 }
 
@@ -365,7 +422,7 @@ void *TrainModelThread(void *id) {
   long long l1, l2, c, target, label, local_iter = iter;
   unsigned long long next_random = (long long)id;
   real f, g;
-  clock_t now;
+  int now;
   real *neu1 = (real *)calloc(layer1_size, sizeof(real));
   real *neu1e = (real *)calloc(layer1_size, sizeof(real));
   FILE *fi = fopen(train_file, "rb");
@@ -376,9 +433,9 @@ void *TrainModelThread(void *id) {
       last_word_count = word_count;
       if ((debug_mode > 1)) {
         now=clock();
-        printf("%cAlpha: %f  Progress: %.2f%%  Words/thread/sec: %.2fk  ", 13, alpha,
-         word_count_actual / (real)(iter * train_words + 1) * 100,
-         word_count_actual / ((real)(now - start + 1) / (real)CLOCKS_PER_SEC * 1000));
+        // printf("%cAlpha: %f  Progress: %.2f%%  Words/thread/sec: %.2fk  ", 13, alpha,
+        //  word_count_actual / (real)(iter * train_words + 1) * 100,
+        //  word_count_actual / ((real)(now - start + 1) / (real)CLOCKS_PER_SEC * 1000));
         fflush(stdout);
       }
       alpha = starting_alpha * (1 - word_count_actual / (real)(iter * train_words + 1));
